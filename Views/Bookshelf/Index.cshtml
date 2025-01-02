@@ -1,0 +1,55 @@
+@model List<MyLibrarySite.Models.BookshelfItem>
+
+@{
+    ViewData["Title"] = "Kitaplığım";
+}
+
+<h2>bookshelf</h2>
+
+@if (Model.Any())
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Book Name </th>
+                <th>Author</th>
+                <th>last Readed Page</th>
+                <th>Update</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.Authors</td>
+                <td>@item.LastPageRead</td>
+                <td>
+                    <form asp-action="UpdateLastPage" method="post">
+                        <input type="hidden" name="bookshelfItemId" value="@item.BookshelfItemId" />
+                        <input type="number" name="lastPage" value="@item.LastPageRead" min="0" />
+                        <button type="submit">Güncelle</button>
+                    </form>
+                </td>
+                <td>
+                    <form asp-action="Remove" method="post">
+                        <input type="hidden" name="bookshelfItemId" value="@item.BookshelfItemId" />
+                        <button type="submit">Çıkar</button>
+                    </form>
+                </td>
+                <td>
+                <form asp-controller="Book" asp-action="Read" method="get">
+                    <input type="hidden" name="id" value="@item.BookId" />
+                    <button type="submit" class="btn btn-primary">Read</button>
+                </form>
+            </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Your bookshelf is empty.</p>
+}

@@ -1,0 +1,43 @@
+@model MyLibrarySite.Models.Book
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <title>@Model.Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>@Model.Title</h1>
+    <iframe id="bookReader" src="@Model.Formats["text/html"]" width="100%" height="500px"></iframe>
+<input type="hidden" id="bookId" value="@Model.Id" />
+<input type="hidden" id="lastPage" value="0" />
+    <script>
+    let lastPage = 0;
+
+
+document.addEventListener("scroll", () => {
+    lastPage = Math.floor(window.scrollY / window.innerHeight);
+});
+
+
+document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+        const bookId = document.getElementById("bookId").value;
+        if (lastPage > 0) {
+            fetch('/Bookshelf/UpdateLastPageOnExit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    bookId: bookId,
+                    lastPage: lastPage
+                })
+            });
+        }
+    }
+});
+</script>
+</body>
+</html>

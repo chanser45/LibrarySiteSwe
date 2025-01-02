@@ -1,0 +1,60 @@
+﻿@{
+    
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+   
+
+    <div class="container">
+        <h1>Home</h1>
+
+        <form asp-action="Search" method="post">
+            <div>
+                <input type="text" name="query" placeholder="Search book" />
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </form>
+
+        <hr />
+
+       <h3>Popular Books</h3>
+        @if (ViewBag.PopularBooks != null)
+        {
+            var popularBooks = (List<MyLibrarySite.Models.Book>)ViewBag.PopularBooks;
+            <table>
+                <thead>
+                    <tr>
+                        <th>Book Name</th>
+                        <th>Author</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var book in popularBooks)
+                    {
+                        <tr>
+                            <td>@book.Title</td>
+                            <td>@string.Join(", ", book.Authors?.Select(a => a.Name) ?? new string[] { "Unknown Author" })</td>
+                            <td>
+                <form asp-controller="Book" asp-action="Read" method="get">
+                    <input type="hidden" name="id" value="@book.Id" />
+                    <button type="submit" class="btn btn-primary">Read</button>
+                </form>
+            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+       
+    </div>
+
+</body>
+</html>

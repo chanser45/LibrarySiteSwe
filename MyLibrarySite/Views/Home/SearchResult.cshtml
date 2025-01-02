@@ -1,0 +1,60 @@
+@model List<MyLibrarySite.Models.Book>
+
+@{
+    ViewData["Title"] = "Search results";
+}
+
+<h2>Search results</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Book ID</th>
+                <th>Book Name</th>
+                <th>Author</th>
+                <th>Add</th>
+            </tr>
+        </thead>
+        <tbody>
+            <link rel="stylesheet" href="~/css/site.css" />
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>@book.Id</td>
+                <td>@book.Title</td>
+                <td>
+                    @string.Join(", ", book.Authors.Select(a => a.Name))
+                </td>
+                <td>
+                <form asp-controller="Book" asp-action="Read" method="get">
+                    <input type="hidden" name="id" value="@book.Id" />
+                    <button type="submit" class="btn btn-primary">Read</button>
+                </form>
+            </td>
+                <td>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <form asp-controller="Bookshelf" asp-action="Add" method="post">
+                            <input type="hidden" name="bookId" value="@book.Id" />
+                            <input type="hidden" name="title" value="@book.Title" />
+                            <input type="hidden" name="authors" 
+                                   value="@string.Join(", ", book.Authors.Select(a => a.Name))" />
+                            <button type="submit"><Address>Add to Bookshelf</Address></button>
+                        </form>
+                    }
+                    else
+                    {
+                        <span>Please Login</span>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No result found.</p>
+}

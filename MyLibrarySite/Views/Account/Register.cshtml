@@ -1,0 +1,41 @@
+@model MyLibrarySite.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Kayıt Ol";
+}
+<link rel="stylesheet" href="~/css/login.css" />
+<h2>Register</h2>
+
+<div class="formDiv">
+<form asp-action="Register" method="post">
+    <div>
+        <label for="Email">E-mail</label><br />
+        <input asp-for="Email" type="email" required />
+    </div>
+    <br />
+    <div>
+        <label for="Password">Password</label><br />
+        <input asp-for="Password" type="password" required />
+    </div>
+    <br />
+    <div>
+        <label for="ConfirmPassword">Confirm Password</label><br />
+        <input asp-for="ConfirmPassword" type="password" required />
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+</div>
+
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div style="color: red;">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}

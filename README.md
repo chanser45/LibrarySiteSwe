@@ -3,7 +3,7 @@
     
 <h3>Use Case Diagram</h3>
 
-![USECASESWE](https://github.com/user-attachments/assets/b8db5dd7-2746-47f9-90e4-d675b1bd1151)
+![USECASESWE]([https://github.com/user-attachments/assets/b8db5dd7-2746-47f9-90e4-d675b1bd1151](https://github.com/chanser45/LibrarySiteSwe/blob/main/useCaseDia.jpg))
 
 <h3>Architectural Design</h3>
 

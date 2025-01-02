@@ -25,3 +25,6 @@
 
 ![StateDiagramSwe](https://github.com/user-attachments/assets/d175cdb8-0a1d-442e-965e-2b56f39f2d74)
 
+<h3>Unit Test Result</h3>
+
+![StateDiagramSwe](https://github.com/chanser45/LibrarySiteSwe/blob/main/UnitTest.jpg)
